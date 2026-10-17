@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: easydrop-api
+    runtime: python
+    plan: free
+    buildCommand: bash build.sh
+    startCommand: gunicorn config.wsgi:application
+    envVars:
+      - {key: PYTHON_VERSION, value: 3.12.3}
+      - {key: DATABASE_URL, sync: false}   # the Supabase connection string: set it in Render > Environment (a Blueprint never overwrites it)
+      - {key: SECRET_KEY, generateValue: true}
+      - {key: DEBUG, value: "0"}
+      - {key: SUPABASE_URL, sync: false}
+      - {key: SUPABASE_SERVICE_KEY, sync: false}
+      - {key: SUPABASE_BUCKET, value: product-images}
+      - {key: SUPABASE_ICON_BUCKET, value: icons}
